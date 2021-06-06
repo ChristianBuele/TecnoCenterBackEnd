@@ -20,6 +20,10 @@ public class Venta {
     @JoinColumn(name="id_empleado", nullable=false)
 	private Empleado empleado;
 	
+	@ManyToOne
+    @JoinColumn(name="id_usuario", nullable=false)
+	private Usuario usuario;
+	
 	
 	
 }

@@ -29,6 +29,8 @@ public class Producto {
     @JoinColumn(name="id_venta", nullable=false)
 	private Venta venta;
 	
+	@OneToMany(mappedBy="producto")
+	private Set<Imagen> imagenes;
 	
 //	@ManyToMany
 //	@JoinTable(name="usuarioproducto",joinColumns =@JoinColumn(name="id_producto"),inverseJoinColumns = @JoinColumn(name="id_usuario") )
