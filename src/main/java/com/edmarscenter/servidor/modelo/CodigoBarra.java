@@ -23,8 +23,17 @@ public class CodigoBarra {
 	
 	private String link;
 	
-	@OneToMany(mappedBy="codigoBarra")
-	private Set<Producto> productos;
+	
+	
+	public CodigoBarra(int codigoLocal, int codProducto) {
+		super();
+		this.codigoLocal = codigoLocal;
+		this.codProducto = codProducto;
+		generarCodigo();
+	}
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_producto", referencedColumnName = "id_producto")
+	private Producto producto;
 	
 	public void generarCodigo() {
 		this.codigoDeBarra=unirCampos();
@@ -102,17 +111,18 @@ public class CodigoBarra {
 	public void setCodigoDeBarra(String codigoDeBarra) {
 		this.codigoDeBarra = codigoDeBarra;
 	}
-	public Set<Producto> getProductos() {
-		return productos;
-	}
-	public void setProductos(Set<Producto> productos) {
-		this.productos = productos;
-	}
+
 	public String getLink() {
 		return link;
 	}
 	public void setLink(String link) {
 		this.link = link;
+	}
+	public Producto getProducto() {
+		return producto;
+	}
+	public void setProducto(Producto producto) {
+		this.producto = producto;
 	}
 	
 	

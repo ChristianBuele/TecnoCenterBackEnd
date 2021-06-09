@@ -1,12 +1,12 @@
 package com.edmarscenter.servidor.modelo;
 
-public class Error {
+public class Mensaje {
 	private boolean error=false;
 	private String mensaje;
 	private String path;
 	
-	public Error(boolean error, String mensaje,String path) {
-		super();
+	public Mensaje(boolean error, String mensaje,String path) {
+		
 		this.error = error;
 		this.mensaje = mensaje;
 		this.path=path;

@@ -40,8 +40,7 @@ public class Producto {
     @JoinColumn(name="id_categoria", nullable=false)
 	private Categoria categoria;
 	
-	@ManyToOne
-    @JoinColumn(name="id_codigoBarra", nullable=false)
+	@OneToOne(mappedBy = "producto")
 	private CodigoBarra codigoBarra;
 
 	public int getId_producto() {
@@ -58,14 +57,6 @@ public class Producto {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-
-	public CodigoBarra getCodigoBarra() {
-		return codigoBarra;
-	}
-
-	public void setCodigoBarra(CodigoBarra codigoBarra) {
-		this.codigoBarra = codigoBarra;
 	}
 
 	public double getCosto() {
@@ -146,6 +137,14 @@ public class Producto {
 
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
+	}
+
+	public CodigoBarra getCodigoBarra() {
+		return codigoBarra;
+	}
+
+	public void setCodigoBarra(CodigoBarra codigoBarra) {
+		this.codigoBarra = codigoBarra;
 	}
 
 	
