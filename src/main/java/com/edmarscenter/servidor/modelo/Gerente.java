@@ -20,4 +20,30 @@ public class Gerente {
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_local", referencedColumnName = "id_local")
 	private Local local;
+
+	public int getId_gerente() {
+		return id_gerente;
+	}
+
+	public void setId_gerente(int id_gerente) {
+		this.id_gerente = id_gerente;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public Local getLocal() {
+		return local;
+	}
+
+	public void setLocal(Local local) {
+		this.local = local;
+	}
+	
+	
 }

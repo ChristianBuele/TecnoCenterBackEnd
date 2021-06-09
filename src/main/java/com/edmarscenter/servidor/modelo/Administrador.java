@@ -19,4 +19,30 @@ public class Administrador {
 	
 	@OneToMany(mappedBy="administrador")
 	private Set<Local> locales;
+
+	public int getId_administrador() {
+		return id_administrador;
+	}
+
+	public void setId_administrador(int id_administrador) {
+		this.id_administrador = id_administrador;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public Set<Local> getLocales() {
+		return locales;
+	}
+
+	public void setLocales(Set<Local> locales) {
+		this.locales = locales;
+	}
+	
+	
 }
