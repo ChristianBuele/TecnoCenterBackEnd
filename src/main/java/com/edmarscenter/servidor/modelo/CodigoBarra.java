@@ -1,15 +1,22 @@
 package com.edmarscenter.servidor.modelo;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.sun.istack.NotNull;
+
 @Entity
 @Table(name="codigoBarra")
-public class CodigoBarra {
+public class CodigoBarra implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id_codigoBarra;
+	private int id_codigoDeBarra;
+	
+	private String codigoDeBarra;
 	
 	private String codPais="786";
 	
@@ -19,21 +26,27 @@ public class CodigoBarra {
 	
 	private int digitoControl;
 	
-	private String codigoDeBarra;
+	
 	
 	private String link;
 	
+	private boolean disponible=true;
 	
+	@JsonBackReference(value="cb-pro")
+	 @OneToOne(fetch = FetchType.LAZY,
+	            cascade =  CascadeType.ALL,
+	            mappedBy = "codigoBarra")
+	private Producto producto;
 	
 	public CodigoBarra(int codigoLocal, int codProducto) {
 		super();
 		this.codigoLocal = codigoLocal;
 		this.codProducto = codProducto;
-		generarCodigo();
+		
 	}
-	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_producto", referencedColumnName = "id_producto")
-	private Producto producto;
+	public CodigoBarra() {
+		
+	}
 	
 	public void generarCodigo() {
 		this.codigoDeBarra=unirCampos();
@@ -71,16 +84,11 @@ public class CodigoBarra {
 			}
 		}
 		int sumatoria=sumaImpar*3+sumaPar;
-		System.out.println("Sumatoria:"+sumatoria);
 		this.digitoControl=((sumatoria/10)+1)*10-sumatoria;
+		System.out.println("El codigo generado es "+datos+String.valueOf(this.digitoControl));
 		return datos+String.valueOf(this.digitoControl);	
 	}
-	public int getId_codigoBarra() {
-		return id_codigoBarra;
-	}
-	public void setId_codigoBarra(int id_codigoBarra) {
-		this.id_codigoBarra = id_codigoBarra;
-	}
+
 	public String getCodPais() {
 		return codPais;
 	}
@@ -105,18 +113,17 @@ public class CodigoBarra {
 	public void setDigitoControl(int digitoControl) {
 		this.digitoControl = digitoControl;
 	}
-	public String getCodigoDeBarra() {
-		return codigoDeBarra;
-	}
-	public void setCodigoDeBarra(String codigoDeBarra) {
-		this.codigoDeBarra = codigoDeBarra;
-	}
-
 	public String getLink() {
 		return link;
 	}
 	public void setLink(String link) {
 		this.link = link;
+	}
+	public boolean isDisponible() {
+		return disponible;
+	}
+	public void setDisponible(boolean disponible) {
+		this.disponible = disponible;
 	}
 	public Producto getProducto() {
 		return producto;
@@ -124,6 +131,20 @@ public class CodigoBarra {
 	public void setProducto(Producto producto) {
 		this.producto = producto;
 	}
+	public int getId_codigoDeBarra() {
+		return id_codigoDeBarra;
+	}
+	public void setId_codigoDeBarra(int id_codigoDeBarra) {
+		this.id_codigoDeBarra = id_codigoDeBarra;
+	}
+	public String getCodigoDeBarra() {
+		return codigoDeBarra;
+	}
+	public void setCodigoDeBarra(String codigoDeBarra) {
+		this.codigoDeBarra = codigoDeBarra;
+	}
+	
+
 	
 	
 }

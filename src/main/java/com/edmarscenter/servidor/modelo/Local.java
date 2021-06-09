@@ -1,18 +1,25 @@
 package com.edmarscenter.servidor.modelo;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Entity
 @Table(name="local")
-public class Local {
+public class Local implements Serializable  {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id_local;
 	private String nombre;
 	private String telefono;
 	
-	@OneToMany(mappedBy="local")
+	@JsonBackReference(value="lo-pro")
+	@OneToMany(mappedBy = "local",cascade = CascadeType.ALL,orphanRemoval = true)
 	private Set<Producto> productos;
 	
 	@OneToMany(mappedBy="local")

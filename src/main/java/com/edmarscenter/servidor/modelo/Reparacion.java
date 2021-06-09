@@ -1,12 +1,13 @@
 package com.edmarscenter.servidor.modelo;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name="reparacion")
-public class Reparacion {
+public class Reparacion implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id_reparacion;

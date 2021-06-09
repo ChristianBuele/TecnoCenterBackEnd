@@ -1,17 +1,22 @@
 package com.edmarscenter.servidor.modelo;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name="categoria")
-public class Categoria {
+public class Categoria implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id_categoria;
 	private String nombre;
 	
+	@JsonBackReference(value="cat-pro")
 	@OneToMany(mappedBy="categoria")
 	private Set<Producto> productos;
 

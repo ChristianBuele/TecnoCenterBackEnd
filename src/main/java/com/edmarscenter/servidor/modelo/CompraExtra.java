@@ -1,5 +1,6 @@
 package com.edmarscenter.servidor.modelo;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -12,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="CompraExtra")
-public class CompraExtra {
+public class CompraExtra implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id_compraExtra;

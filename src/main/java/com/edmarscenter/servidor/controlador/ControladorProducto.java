@@ -9,9 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.edmarscenter.servidor.modelo.Producto;
-import com.edmarscenter.servidor.modelo.CodigoBarra;
-import com.edmarscenter.servidor.modelo.Mensaje;
+import com.edmarscenter.servidor.modelo.*;
 import com.edmarscenter.servidor.repositorio.CodigoBarraInterface;
 import com.edmarscenter.servidor.repositorio.ProductosInterface;
 
@@ -29,21 +27,16 @@ public class ControladorProducto {
 		System.out.println("Add producto "+producto);
 		try {
 			Producto productoNuevo=productosInterface.save(producto);//guardo el producto
-			CodigoBarra codB=new CodigoBarra(productoNuevo.getLocal().getId_local(),productoNuevo.getId_producto());//genero el codigo de barras
+			System.out.println("Guarda el producto "+productoNuevo.getId_producto());
+			
+			CodigoBarra codB=productoNuevo.getCodigoBarra();
+			codB.setCodProducto(productoNuevo.getId_producto());
+			codB.generarCodigo();
 			
 			CodigoBarra nuevoCodigo=codigoBarraInterface.save(codB);//agrego el codigo de barras a la base de datos
 			
 			productoNuevo.setCodigoBarra(nuevoCodigo);//agrego el codigo al producto
 			Producto m=productosInterface.save(productoNuevo);//actualizo el codigo en el producto
-			
-			System.out.println("El codigo de barra el el producto es "+m.getCodigoBarra().getId_codigoBarra());
-			
-			nuevoCodigo.setProducto(m);//agrego el producto al codigode barra
-			CodigoBarra cod=codigoBarraInterface.save(nuevoCodigo);//actualizo el codigo de barras con el producto
-			
-			
-			
-			System.out.println(cod.getProducto().getId_producto());
 			
 			return new Mensaje(false,"Ok","/producto");
 		} catch (Exception e) {
@@ -65,9 +58,11 @@ public class ControladorProducto {
 		System.out.println("Get all productos");
 		try {
 			List<Producto> x=productosInterface.findAll();
+			
 			return new ResponseEntity<List<Producto>>(x,HttpStatus.OK);
 		} catch (Exception e) {
 			// TODO: handle exception
+			System.out.println("Error "+e.getMessage());
 			return new ResponseEntity<List<Producto>>(new ArrayList<Producto>(),HttpStatus.NO_CONTENT);
 		}
 		
@@ -99,5 +94,26 @@ public class ControladorProducto {
 			return new Mensaje(true, "Error al eliminar el producto","/producto/"+id);
 		}
 
+	}
+	///
+	@Autowired
+	CodigoBarraInterface codBarraInterface;
+	
+	@GetMapping("/producto/search/{codigo}")
+	public ResponseEntity<Producto> getByCodigo(@PathVariable(value = "codigo")String codigo) {
+		System.out.println("Get by codigo "+codigo);
+		try {
+			CodigoBarra cod=codBarraInterface.findByCodigoDeBarra(codigo);
+			int idProducto=cod.getCodProducto();
+			Producto pro=productosInterface.findById(idProducto).orElseGet(()->{
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Carrito no encontrado");
+			});
+			return new ResponseEntity<Producto>(pro,HttpStatus.OK);
+		} catch (Exception e) {
+			// TODO: handle exception
+			
+			return new ResponseEntity<Producto>(new Producto(),HttpStatus.NO_CONTENT);
+		}
+		
 	}
 }

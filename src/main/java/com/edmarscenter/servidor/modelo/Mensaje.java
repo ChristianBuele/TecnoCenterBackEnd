@@ -1,6 +1,8 @@
 package com.edmarscenter.servidor.modelo;
 
-public class Mensaje {
+import java.io.Serializable;
+
+public class Mensaje implements Serializable{
 	private boolean error=false;
 	private String mensaje;
 	private String path;

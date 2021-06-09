@@ -1,10 +1,12 @@
 package com.edmarscenter.servidor.modelo;
 
+import java.io.Serializable;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name="imagen")
-public class Imagen {
+public class Imagen implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id_imagen;

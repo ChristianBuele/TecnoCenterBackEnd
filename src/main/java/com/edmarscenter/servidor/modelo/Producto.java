@@ -1,13 +1,15 @@
 package com.edmarscenter.servidor.modelo;
 
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.*;
 @Entity
 @Table(name="producto")
-public class Producto {
+public class Producto implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id_producto;
@@ -26,21 +28,27 @@ public class Producto {
 	
 	private int cantidad;
 	
-	@ManyToOne
-    @JoinColumn(name="id_local", nullable=false)
+	@JsonBackReference(value="pro-local")
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="id_local")
 	private Local local;
 
+	@JsonIgnore
 	@OneToMany(mappedBy="producto")
 	private Set<Venta> ventas;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="producto")
 	private Set<Imagen> imagenes;
 	
+	@JsonBackReference(value="pro-cat")
 	@ManyToOne
     @JoinColumn(name="id_categoria", nullable=false)
 	private Categoria categoria;
 	
-	@OneToOne(mappedBy = "producto")
+	@JsonBackReference(value="pro-cb")
+	@OneToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
+    @JoinColumn(name = "codigoDeBarra", nullable = false)
 	private CodigoBarra codigoBarra;
 
 	public int getId_producto() {
