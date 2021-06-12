@@ -5,6 +5,9 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="reparacion")
 public class Reparacion implements Serializable {
@@ -14,10 +17,12 @@ public class Reparacion implements Serializable {
 	
 	private String nombre;
 	
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date fecha_ingreso;
 	
 	private String descripcion;
 	
+	@JsonFormat(pattern = "/dd/MM/yyyy")
 	private Date fecha_salida;
 	
 	private double precio;

@@ -116,4 +116,20 @@ public class ControladorProducto {
 		}
 		
 	}
+	
+	//productos disponibles a la venta
+	@GetMapping("/producto/venta")
+	public ResponseEntity<List<Producto>> getProductosVenta(){
+		System.out.println("Se busca los productos para la venta");
+		List<Producto> productos=new ArrayList<Producto>();
+		try {
+			productos = productosInterface.findByDisponibleVenta(true);
+			return new ResponseEntity<List<Producto>>(productos,HttpStatus.OK);
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e.getMessage());
+			return new ResponseEntity<List<Producto>>(productos,HttpStatus.BAD_REQUEST);
+			
+		}
+	}
 }

@@ -4,6 +4,8 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="empleado")
 public class Empleado implements Serializable {
@@ -16,7 +18,10 @@ public class Empleado implements Serializable {
 	private String numero;
 	private String correo;
 	private String contra;
+	private boolean activo=true;
+	private boolean rol=false;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="empleado")
 	private Set<Venta> ventas;
 	
@@ -24,12 +29,15 @@ public class Empleado implements Serializable {
     @JoinColumn(name="id_local", nullable=false)
 	private Local local;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="empleado")
 	private Set<Reparacion> reparaciones;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="empleado")
 	private Set<CompraExtra> comprasExtra;
 
+	@JsonIgnore
 	@OneToMany(mappedBy="empleado")
 	private Set<Contrato> contratos;
 
@@ -119,6 +127,22 @@ public class Empleado implements Serializable {
 
 	public void setContratos(Set<Contrato> contratos) {
 		this.contratos = contratos;
+	}
+
+	public boolean isActivo() {
+		return activo;
+	}
+
+	public void setActivo(boolean activo) {
+		this.activo = activo;
+	}
+
+	public boolean isRol() {
+		return rol;
+	}
+
+	public void setRol(boolean rol) {
+		this.rol = rol;
 	}
 	
 	

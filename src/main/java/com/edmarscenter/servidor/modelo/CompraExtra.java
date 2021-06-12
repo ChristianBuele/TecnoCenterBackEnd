@@ -16,7 +16,7 @@ import javax.persistence.Table;
 public class CompraExtra implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id_compraExtra;
+	private int id_compraextra;
 	
 	private Date fecha_compra;
 	private String descripcion;
@@ -27,11 +27,11 @@ public class CompraExtra implements Serializable{
 	private Empleado empleado;
 
 	public int getId_compraExtra() {
-		return id_compraExtra;
+		return id_compraextra;
 	}
 
 	public void setId_compraExtra(int id_compraExtra) {
-		this.id_compraExtra = id_compraExtra;
+		this.id_compraextra = id_compraExtra;
 	}
 
 	public Date getFecha_compra() {

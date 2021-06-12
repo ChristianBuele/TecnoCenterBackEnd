@@ -22,15 +22,17 @@ public class Local implements Serializable  {
 	@OneToMany(mappedBy = "local",cascade = CascadeType.ALL,orphanRemoval = true)
 	private Set<Producto> productos;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="local")
 	private Set<Redes> redes;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="local")
 	private Set<Empleado> empleados;
 	
-	@OneToOne(mappedBy = "local")
-	private Gerente gerente;
+
 	
+	@JsonBackReference(value="local-admin")
 	@ManyToOne
     @JoinColumn(name="id_administrador", nullable=false)
 	private Administrador administrador;
@@ -83,14 +85,6 @@ public class Local implements Serializable  {
 
 	public void setEmpleados(Set<Empleado> empleados) {
 		this.empleados = empleados;
-	}
-
-	public Gerente getGerente() {
-		return gerente;
-	}
-
-	public void setGerente(Gerente gerente) {
-		this.gerente = gerente;
 	}
 
 	public Administrador getAdministrador() {

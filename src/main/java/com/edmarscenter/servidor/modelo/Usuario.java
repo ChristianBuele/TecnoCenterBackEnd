@@ -6,6 +6,8 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="usuario")
 public class Usuario implements Serializable {
@@ -16,11 +18,14 @@ public class Usuario implements Serializable {
 	private String nombre;
 	private String correo;
 	private String telefono;
+	private String cedula;
 	private String direccion;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="usuario")
 	private Set<Reparacion> reparaciones;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="usuario")
 	private Set<Venta> ventas;
 	
@@ -57,6 +62,14 @@ public class Usuario implements Serializable {
 
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
+	}
+
+	public String getCedula() {
+		return cedula;
+	}
+
+	public void setCedula(String cedula) {
+		this.cedula = cedula;
 	}
 
 	public String getDireccion() {
