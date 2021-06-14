@@ -19,6 +19,8 @@ public class ControladorProducto {
 	@Autowired
 	ProductosInterface productosInterface;
 	
+	Cross cross=new Cross();
+	
 	@Autowired
 	CodigoBarraInterface codigoBarraInterface;
 
@@ -118,7 +120,7 @@ public class ControladorProducto {
 	}
 	
 	//productos disponibles a la venta
-	@CrossOrigin(origins = "http://localhost:4200")
+	@CrossOrigin(origins = "https://edmarscenterserver.herokuapp.com")
 	@GetMapping("/producto/venta")
 	public ResponseEntity<List<Producto>> getProductosVenta(){
 		System.out.println("Se busca los productos para la venta");
