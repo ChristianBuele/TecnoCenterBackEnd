@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="contrato")
 public class Contrato implements Serializable {
@@ -26,6 +28,7 @@ public class Contrato implements Serializable {
 	
 	private boolean estado;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="contrato")
 	private Set<Pago> pagos;
 	
