@@ -13,15 +13,15 @@ public class ServidorApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ServidorApplication.class, args);
 	}
-	@Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurerAdapter() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("https://edmarscenter.herokuapp.com").allowedMethods("PUT", "DELETE",
-                        "GET", "POST");
-            }
-        };
-    }
+//	@Bean
+//    public WebMvcConfigurer corsConfigurer() {
+//        return new WebMvcConfigurerAdapter() {
+//            @Override
+//            public void addCorsMappings(CorsRegistry registry) {
+//                registry.addMapping("/**").allowedOrigins("https://edmarscenter.herokuapp.com").allowedMethods("PUT", "DELETE",
+//                        "GET", "POST");
+//            }
+//        };
+//    }
 
 }

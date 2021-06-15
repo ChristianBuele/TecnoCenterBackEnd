@@ -15,6 +15,7 @@ import com.edmarscenter.servidor.repositorio.ProductosInterface;
 
 @RestController
 @RequestMapping("/")
+@CrossOrigin(origins = "*", methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PUT})
 public class ControladorProducto {
 	@Autowired
 	ProductosInterface productosInterface;
