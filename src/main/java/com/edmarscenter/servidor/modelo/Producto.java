@@ -41,12 +41,12 @@ public class Producto implements Serializable {
 	@OneToMany(mappedBy="producto")
 	private Set<Imagen> imagenes;
 	
-	@JsonBackReference(value="pro-cat")
+//	@JsonBackReference(value="pro-cat")
 	@ManyToOne
     @JoinColumn(name="id_categoria", nullable=false)
 	private Categoria categoria;
 	
-	@JsonBackReference(value="pro-cb")
+	
 	@OneToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
     @JoinColumn(name = "codigoDeBarra", nullable = false)
 	private CodigoBarra codigoBarra;

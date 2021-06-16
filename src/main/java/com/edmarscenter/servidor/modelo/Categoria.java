@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -16,7 +17,7 @@ public class Categoria implements Serializable {
 	private int id_categoria;
 	private String nombre;
 	
-	@JsonBackReference(value="cat-pro")
+	@JsonIgnore
 	@OneToMany(mappedBy="categoria")
 	private Set<Producto> productos;
 

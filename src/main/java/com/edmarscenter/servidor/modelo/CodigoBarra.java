@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
 
@@ -32,7 +33,7 @@ public class CodigoBarra implements Serializable {
 	
 	private boolean disponible=true;
 	
-	@JsonBackReference(value="cb-pro")
+	@JsonIgnore
 	 @OneToOne(fetch = FetchType.LAZY,
 	            cascade =  CascadeType.ALL,
 	            mappedBy = "codigoBarra")

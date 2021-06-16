@@ -20,7 +20,7 @@ public class ControladorProducto {
 	@Autowired
 	ProductosInterface productosInterface;
 	
-	Cross cross=new Cross();
+
 	
 	@Autowired
 	CodigoBarraInterface codigoBarraInterface;

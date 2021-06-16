@@ -5,6 +5,8 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="tipo")
 public class Tipo implements Serializable {
@@ -16,6 +18,7 @@ public class Tipo implements Serializable {
 	
 	private boolean disponible;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="tipo")
 	private Set<Paquete> paquetes;
 

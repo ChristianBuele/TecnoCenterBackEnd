@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="paquete")
 public class Paquete  implements Serializable{
@@ -15,6 +17,7 @@ public class Paquete  implements Serializable{
 	
 	private double valor_mensual;
 	
+	@JsonIgnore
 	@ManyToOne
     @JoinColumn(name="id_tipo", nullable=false)
 	private Tipo tipo;
