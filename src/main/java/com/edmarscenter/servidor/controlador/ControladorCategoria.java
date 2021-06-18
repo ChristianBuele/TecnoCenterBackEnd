@@ -13,6 +13,7 @@ import com.edmarscenter.servidor.repositorio.CategoriaInterface;
 
 @RestController
 @RequestMapping("/")
+@CrossOrigin(origins = "*", methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PUT})
 public class ControladorCategoria {
 	@Autowired
 	CategoriaInterface categoriaInterface;
