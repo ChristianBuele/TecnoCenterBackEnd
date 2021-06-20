@@ -1,12 +1,15 @@
 package com.edmarscenter.servidor.controlador;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.edmarscenter.servidor.modelo.*;
 import com.edmarscenter.servidor.repositorio.EmpleadoInterface;
@@ -57,7 +60,7 @@ public class ControladorEmpleado {
 	}
 	
 	@PostMapping("/empleado/login")
-	public Empleado login(@RequestBody Empleado empleado) {
+	public Map<String,Object> login(@RequestBody Empleado empleado) {
 		System.out.println("Se va a loguear el empleado "+empleado.getCorreo());
 		Empleado nuevo;
 		try {
@@ -70,13 +73,19 @@ public class ControladorEmpleado {
 		if(nuevo!=null && nuevo.isActivo()) {
 			if(nuevo.getContra().equals(empleado.getContra())) {
 				System.out.println("Las contraseñas son correctas 1:"+nuevo.getContra());
-				return nuevo;
+				Map<String,Object> datos=new HashMap<String, Object>();
+				datos.put("error", false);
+				datos.put("successs", nuevo);
+				return  datos;
 			}else {
 				System.out.println("La contraseña es incorrecta");
 			}
 		}
 		System.out.println("No se encuentra o el usuario no esta activo");
-		return null;
+		Map<String,Object> datos=new HashMap<String, Object>();
+		datos.put("error",true);
+		datos.put("datos", nuevo);
+		return datos;
 	}
 	
 }
