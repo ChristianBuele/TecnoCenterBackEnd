@@ -75,7 +75,7 @@ public class ControladorEmpleado {
 				System.out.println("Las contraseñas son correctas 1:"+nuevo.getContra());
 				Map<String,Object> datos=new HashMap<String, Object>();
 				datos.put("error", false);
-				datos.put("successs", nuevo);
+				datos.put("datos", nuevo);
 				return  datos;
 			}else {
 				System.out.println("La contraseña es incorrecta");
