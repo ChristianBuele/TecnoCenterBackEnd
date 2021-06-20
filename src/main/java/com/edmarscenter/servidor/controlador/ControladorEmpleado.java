@@ -12,6 +12,7 @@ import com.edmarscenter.servidor.modelo.*;
 import com.edmarscenter.servidor.repositorio.EmpleadoInterface;
 @RestController
 @RequestMapping("/")
+@CrossOrigin(origins = "*", methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PUT})
 public class ControladorEmpleado {
 	@Autowired
 	EmpleadoInterface empleadoInterface;

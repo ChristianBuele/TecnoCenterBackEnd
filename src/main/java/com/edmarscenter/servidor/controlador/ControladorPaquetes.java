@@ -15,6 +15,8 @@ import com.edmarscenter.servidor.modelo.Tipo;
 import com.edmarscenter.servidor.repositorio.PaqueteInterface;
 
 @Controller
+@RequestMapping("/")
+@CrossOrigin(origins = "*", methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PUT})
 public class ControladorPaquetes {
 	@Autowired
 	PaqueteInterface paqueteInterface;
