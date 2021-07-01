@@ -47,8 +47,8 @@ public class Producto implements Serializable {
 	private Categoria categoria;
 	
 	
-	@OneToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
-    @JoinColumn(name = "codigoDeBarra", nullable = false)
+	@ManyToOne
+    @JoinColumn(name="id_codigoDeBarra", nullable=false)
 	private CodigoBarra codigoBarra;
 
 	public int getId_producto() {

@@ -34,10 +34,8 @@ public class CodigoBarra implements Serializable {
 	private boolean disponible=true;
 	
 	@JsonIgnore
-	 @OneToOne(fetch = FetchType.LAZY,
-	            cascade =  CascadeType.ALL,
-	            mappedBy = "codigoBarra")
-	private Producto producto;
+	@OneToMany(mappedBy="codigoBarra")
+	private Set<Producto> productos;
 	
 	public CodigoBarra(int codigoLocal, int codProducto) {
 		super();
@@ -126,12 +124,7 @@ public class CodigoBarra implements Serializable {
 	public void setDisponible(boolean disponible) {
 		this.disponible = disponible;
 	}
-	public Producto getProducto() {
-		return producto;
-	}
-	public void setProducto(Producto producto) {
-		this.producto = producto;
-	}
+
 	public int getId_codigoDeBarra() {
 		return id_codigoDeBarra;
 	}

@@ -84,7 +84,7 @@ public class ControladorEmpleado {
 		System.out.println("No se encuentra o el usuario no esta activo");
 		Map<String,Object> datos=new HashMap<String, Object>();
 		datos.put("error",true);
-		datos.put("datos", nuevo);
+		datos.put("datos", null);
 		return datos;
 	}
 	
