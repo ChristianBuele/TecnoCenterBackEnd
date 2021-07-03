@@ -47,8 +47,8 @@ public class Producto implements Serializable {
 	private Categoria categoria;
 	
 	
-	@ManyToOne
-    @JoinColumn(name="id_codigoDeBarra", nullable=false)
+	@ManyToOne()
+    @JoinColumn(name="id_codigoDeBarra")
 	private CodigoBarra codigoBarra;
 
 	public int getId_producto() {

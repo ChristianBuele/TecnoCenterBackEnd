@@ -89,6 +89,22 @@ public class Empleado implements Serializable {
 		this.contra = contra;
 	}
 
+	public boolean isActivo() {
+		return activo;
+	}
+
+	public void setActivo(boolean activo) {
+		this.activo = activo;
+	}
+
+	public boolean isRol() {
+		return rol;
+	}
+
+	public void setRol(boolean rol) {
+		this.rol = rol;
+	}
+
 	public Set<Venta> getVentas() {
 		return ventas;
 	}
@@ -129,23 +145,7 @@ public class Empleado implements Serializable {
 		this.contratos = contratos;
 	}
 
-	public boolean isActivo() {
-		return activo;
-	}
 
-	public void setActivo(boolean activo) {
-		this.activo = activo;
-	}
-
-	public boolean isRol() {
-		return rol;
-	}
-
-	public void setRol(boolean rol) {
-		this.rol = rol;
-	}
-	
-	
 	
 
 

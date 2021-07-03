@@ -7,6 +7,7 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
 
@@ -136,6 +137,12 @@ public class CodigoBarra implements Serializable {
 	}
 	public void setCodigoDeBarra(String codigoDeBarra) {
 		this.codigoDeBarra = codigoDeBarra;
+	}
+	public Set<Producto> getProductos() {
+		return productos;
+	}
+	public void setProductos(Set<Producto> productos) {
+		this.productos = productos;
 	}
 	
 

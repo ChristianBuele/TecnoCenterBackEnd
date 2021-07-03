@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.edmarscenter.servidor.modelo.CompraExtra;
-import com.edmarscenter.servidor.modelo.Mensaje;
+import com.edmarscenter.servidor.modelo.*;
 import com.edmarscenter.servidor.repositorio.CompraExtraInterface;
 
-@Controller
+@RestController
 @RequestMapping("/")
 @CrossOrigin(origins = "*", methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PUT})
 
@@ -28,17 +28,18 @@ public class ControladorCompraExtra {
 	CompraExtraInterface compraExtraInterface;
 	
 	@PostMapping("/compraExtra")
-	public Mensaje compraExtra(@RequestBody List<CompraExtra> compras) {
+	public ResponseEntity<Mensaje> compraExtra(@RequestBody List<CompraExtra> compras) {
 		System.out.println("Se agrega la compra extra");
 		try {
 			for(int i=0;i<compras.size();i++) {
 				compraExtraInterface.save(compras.get(i));
 			}
-			return new Mensaje(false, "Compras agregadas Exitosamente", "/compraExtra");
+			return new ResponseEntity<Mensaje>(new Mensaje(false, "Compras agregadas Exitosamente", "/compraExtra"),HttpStatus.OK);
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println("A ocurrido un error");
-			return new Mensaje(true, "Compra No Agregada. Intente nuevamente", "/compraExtra");
+			return new ResponseEntity<Mensaje>(new Mensaje(true, "Compra No Agregada. Intente nuevamente", "/compraExtra"),HttpStatus.BAD_GATEWAY
+				)	;
 		}
 	}
 	
@@ -58,5 +59,10 @@ public class ControladorCompraExtra {
 			System.out.println("el error es"+e.getMessage());
 			return new ResponseEntity<Iterable<CompraExtra>>( new ArrayList<>(),HttpStatus.BAD_REQUEST);
 		}
+	}
+	@PostMapping("/compraExtra/empleado")//comprasextra por empleado
+	public ResponseEntity<List<CompraExtra>> getComprasByEmpleado(@RequestBody Empleado empleado){
+		System.out.println("Devolviendo las compras extra de "+empleado.getId_empleado());
+		return new ResponseEntity<List<CompraExtra>>(this.compraExtraInterface.findByEmpleado(empleado),HttpStatus.OK);
 	}
 }

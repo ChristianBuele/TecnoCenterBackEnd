@@ -26,26 +26,44 @@ public class ControladorProducto {
 	CodigoBarraInterface codigoBarraInterface;
 
 	@PostMapping("/producto")
-	public Mensaje addCarrito(@RequestBody Producto producto) {
-		System.out.println("Add producto "+producto);
-		try {
-			Producto productoNuevo=productosInterface.save(producto);//guardo el producto
-			System.out.println("Guarda el producto "+productoNuevo.getId_producto());
-			
-			CodigoBarra codB=productoNuevo.getCodigoBarra();
-			codB.setCodProducto(productoNuevo.getId_producto());
-			codB.generarCodigo();
-			
-			CodigoBarra nuevoCodigo=codigoBarraInterface.save(codB);//agrego el codigo de barras a la base de datos
-			
-			productoNuevo.setCodigoBarra(nuevoCodigo);//agrego el codigo al producto
-			Producto m=productosInterface.save(productoNuevo);//actualizo el codigo en el producto
-			
-			return new Mensaje(false,"Ok","/producto");
-		} catch (Exception e) {
-			// TODO: handle exception
-			return new Mensaje(true,e.getMessage(),"/producto");
+	public Mensaje addCarrito(@RequestBody Producto[] productos) {
+		System.out.println("Add producto "+productos.length);
+		for (int i = 0; i < productos.length; i++) {
+			if(productos[i].getCodigoBarra()==null) {//en caso de que sea un producto totalmente nuevo
+				System.out.println("Producto nuevo");
+				CodigoBarra codigo=new CodigoBarra();
+				codigo.setCodigoLocal(productos[i].getLocal().getId_local());
+				CodigoBarra nuevoCodigo=this.codigoBarraInterface.save(codigo);
+				System.out.println("El nuevo codigo a sido generado");
+				productos[i].setCodigoBarra(nuevoCodigo);//agrego al producto el codigo que le pertenece
+				
+				Producto nuevoProducto=this.productosInterface.save(productos[i]);//agrego el nuevo producto
+				nuevoProducto.getCodigoBarra().setCodProducto(nuevoProducto.getId_producto());
+				nuevoProducto.getCodigoBarra().generarCodigo();
+				this.codigoBarraInterface.save(nuevoProducto.getCodigoBarra());
+			}else {//en caso de que se aactualiza el stock
+				System.out.println("Producto antiguo");
+			}
 		}
+		return new Mensaje(false,"Ok","/producto");
+//		try {
+//			Producto productoNuevo=productosInterface.save(producto);//guardo el producto
+//			System.out.println("Guarda el producto "+productoNuevo.getId_producto());
+//			
+//			CodigoBarra codB=productoNuevo.getCodigoBarra();
+//			codB.setCodProducto(productoNuevo.getId_producto());
+//			codB.generarCodigo();
+//			
+//			CodigoBarra nuevoCodigo=codigoBarraInterface.save(codB);//agrego el codigo de barras a la base de datos
+//			
+//			productoNuevo.setCodigoBarra(nuevoCodigo);//agrego el codigo al producto
+//			Producto m=productosInterface.save(productoNuevo);//actualizo el codigo en el producto
+//			
+//			return new Mensaje(false,"Ok","/producto");
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//			return new Mensaje(true,e.getMessage(),"/producto");
+//		}
 	}
 
 	@GetMapping("/producto/{id}")

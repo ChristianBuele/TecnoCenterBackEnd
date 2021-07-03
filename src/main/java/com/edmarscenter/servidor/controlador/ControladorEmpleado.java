@@ -24,25 +24,41 @@ public class ControladorEmpleado {
 	public Mensaje addUpdateEmpleado(@RequestBody Empleado empleado) {
 		System.out.println("Agregando al empleado "+empleado.getNombre());
 		try {
-			Empleado nuevoEmpleado=empleadoInterface.save(empleado);
-			return new Mensaje(false,"Ok","/empleado");
+			Empleado existente=empleadoInterface.findByCorreo(empleado.getCorreo());
+			
+			if(existente==null) {
+				System.out.println("No existe empleado registrado");
+				Empleado nuevoEmpleado=empleadoInterface.save(empleado);
+				return new Mensaje(false,"Ok","/empleado");
+			}else {
+				return new Mensaje(true,"El correo ya esta registrado","/empleado");
+			}
 		} catch (Exception e) {
 			// TODO: handle exception]
+			System.out.println("Si existe empleado registrado ");
 			return new Mensaje(true,e.getMessage(),"/empleado");
 		}
 	}
 	
-	@DeleteMapping(value = "/empleado")
-	public Mensaje deleteEmpleado(@RequestBody Empleado empleado) {
-		System.out.println("Delete Empleado");
-		empleado.setActivo(false);
+	@DeleteMapping(value = "/empleado/{id}")
+	public Mensaje deleteEmpleado(@PathVariable(value = "id")String id) {
+		System.out.println("Delete Empleado con id="+id);
+		Empleado emp=this.empleadoInterface.findById(Integer.parseInt(id)).orElseGet(() -> {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Carrito no encontrado");
+		});;
+		boolean x= emp.isActivo();
+		if(x) {
+			emp.setActivo(false);
+		}else {
+			emp.setActivo(true);
+		}
 		try {
-			empleadoInterface.save(empleado);
-			return new Mensaje(false, "Ok","/empleado/"+empleado.getId_empleado());
+			empleadoInterface.save(emp);
+			return new Mensaje(false, "Ok","/empleado/");
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println("error delete empleado " + e);
-			return new Mensaje(true, e.getMessage(),"/producto/"+empleado.getId_empleado());
+			return new Mensaje(true, e.getMessage(),"/producto/");
 		}
 	}
 	
@@ -87,5 +103,15 @@ public class ControladorEmpleado {
 		datos.put("datos", null);
 		return datos;
 	}
-	
+	@PutMapping("/empleado")
+	public Mensaje updateEmpleado(@RequestBody Empleado empleado) {
+		System.out.println("Actualizando el empleado");
+		try {
+			Empleado empleados=empleadoInterface.save(empleado);
+			return new Mensaje(false, "Ok","/empleado/");
+		} catch (Exception e) {
+			// TODO: handle exception
+			return new Mensaje(true, e.getMessage(),"/empleado/");
+		}
+	}
 }
